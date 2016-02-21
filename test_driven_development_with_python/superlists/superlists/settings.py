@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'superlists.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,7 +118,24 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
+# Absolute path to the directory that holds media.
+# Example: '/home/media/media.lawrence.com/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash if there is a path component (optional in other cases).
+# Examples: 'http://media.lawrence.com', 'http://example.com/media/'
+MEDIA_URL = '/media/'
+
+# Absolute path to the directory that holds static files like app media.
+# Example: '/home/media/media.lawrence.com/apps/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'collected_static')
+
+# URL that handles the static files like app media.
+# Example: 'http://media.lawrence.com'
 STATIC_URL = '/static/'
+
+# Additional directories which hold static files
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'static'),
+]
