@@ -3,4 +3,5 @@ Appunti
 
 Appunti di programmazione
 
-* Test-Driven-Development with Python - [Amazon](http://amzn.to/1QqJTIJ)
+* Django - [Link](https://djangoproject.com)
+* Test-Driven-Development with Python - [Link](http://www.obeythetestinggoat.com/) - [Amazon](http://amzn.to/1QqJTIJ)
