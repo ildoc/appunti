@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="it.ildoc.signupform.LoginActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/fields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/username_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="25"
+                android:id="@+id/username_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/username"/>
+
+            <EditText
+                android:layout_weight="75"
+                android:id="@+id/username_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/username_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/password_field"
+            android:layout_below="@id/username_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="25"
+                android:id="@+id/password_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/password"/>
+
+            <EditText
+                android:layout_weight="75"
+                android:inputType="textPassword"
+                android:id="@+id/password_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/confirm_field"
+            android:layout_below="@id/password_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="25"
+                android:id="@+id/confirm_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm"/>
+
+            <EditText
+                android:layout_weight="75"
+                android:inputType="textPassword"
+                android:id="@+id/confirm_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/confirm_hint"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_below="@id/fields"
+        android:layout_alignRight="@id/fields"
+        android:layout_alignEnd="@id/fields"
+        android:textSize="32sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit" />
+
+</RelativeLayout>
