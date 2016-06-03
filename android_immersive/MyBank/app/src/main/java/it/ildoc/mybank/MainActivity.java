@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     Button withdrawButton;
     Button depositButton;
     TextView amountDisplay;
+    BankAccount currentAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +25,14 @@ public class MainActivity extends AppCompatActivity {
         depositButton = (Button)findViewById(R.id.deposit_button);
         amountInput = (EditText)findViewById(R.id.amount_input);
 
+        currentAccount = new BankAccount(BankAccount.Type.CHECKING);
+
         withdrawButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String amount = amountInput.getText().toString();
-                amountDisplay.setText(amount);
+                currentAccount.deposit(Double.parseDouble(amount));
+                amountDisplay.setText("Balance is: " + currentAccount.getBalance());
             }
         });
 
@@ -36,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String amount = amountInput.getText().toString();
-                amountDisplay.setText(amount);
+                currentAccount.withDraw(Double.parseDouble(amount));
+                amountDisplay.setText("Balance is: " + currentAccount.getBalance());
             }
         });
     }
