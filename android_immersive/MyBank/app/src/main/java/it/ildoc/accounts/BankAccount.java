@@ -1,39 +1,47 @@
-package it.ildoc.mybank;
+package it.ildoc.accounts;
 
 import java.util.ArrayList;
 
 /**
  * Created by filippo on 02/06/16.
  */
-public class BankAccount {
+public abstract class BankAccount {
     private ArrayList<Double> transactions;
     public static final double overdraftFee = 30;
 
-    BankAccount(Type type)
-    {
+    BankAccount() {
         transactions = new ArrayList<Double>();
-        type = type;
     }
 
     private Type type;
+
     public enum Type {
         SAVINGS, CHECKING
     }
 
-    public void withDraw(double amount){
+    public void withDraw(double amount) {
         transactions.add(-amount);
+
         if (getBalance() < 0)
             transactions.add(-overdraftFee);
     }
 
-    public void deposit(double amount){
+    protected int numberOfWithdraws() {
+        int count = 0;
+        for (double t : transactions) {
+            if (t < 0) count++;
+        }
+        return count;
+    }
+
+    public void deposit(double amount) {
         transactions.add(amount);
     }
 
-    public double getBalance(){
+    public double getBalance() {
         double total = 0;
-        for(double transaction:transactions)
-            total+=transaction;
+        for (double transaction : transactions)
+            total += transaction;
         return total;
     }
 }

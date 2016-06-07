@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import it.ildoc.accounts.BankAccount;
+import it.ildoc.accounts.SavingsAccount;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText amountInput;
@@ -25,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
         depositButton = (Button)findViewById(R.id.deposit_button);
         amountInput = (EditText)findViewById(R.id.amount_input);
 
-        currentAccount = new BankAccount(BankAccount.Type.CHECKING);
+        currentAccount = new SavingsAccount();
 
         withdrawButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String amount = amountInput.getText().toString();
-                currentAccount.deposit(Double.parseDouble(amount));
+                currentAccount.withDraw(Double.parseDouble(amount));
                 amountDisplay.setText("Balance is: " + currentAccount.getBalance());
             }
         });
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String amount = amountInput.getText().toString();
-                currentAccount.withDraw(Double.parseDouble(amount));
+                currentAccount.deposit(Double.parseDouble(amount));
                 amountDisplay.setText("Balance is: " + currentAccount.getBalance());
             }
         });
