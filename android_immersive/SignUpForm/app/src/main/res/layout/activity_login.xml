@@ -11,8 +11,8 @@
         android:id="@+id/fields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
-            android:id="@+id/username_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -32,8 +32,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/password_field"
-            android:layout_below="@id/username_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -54,8 +52,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/confirm_field"
-            android:layout_below="@id/password_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
