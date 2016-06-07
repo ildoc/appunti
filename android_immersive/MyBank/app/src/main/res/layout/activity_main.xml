@@ -38,6 +38,7 @@
     <TextView
         android:id="@+id/balance_display"
         android:text="@string/balance_placeholder"
+        android:inputType="numberDecimal"
         android:textSize="32dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
