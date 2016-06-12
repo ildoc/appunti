@@ -1,11 +1,12 @@
 package it.ildoc.taskit;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by filippo on 07/06/16.
  */
-public class Task {
+public class Task implements Serializable{
     private String name;
     private Date dueDate;
     private boolean done;

@@ -1,5 +1,6 @@
 package it.ildoc.taskit;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +32,10 @@ public class TaskListActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent i = new Intent(TaskListActivity.this, TaskListActivity.class);
+                Task task = (Task)parent.getAdapter().getItem(position);
+                i.putExtra(TaskActivity.EXTRA, task);
+                startActivity(i);
             }
         });
     }
