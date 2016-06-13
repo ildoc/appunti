@@ -2,6 +2,7 @@ package it.ildoc.taskit;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import java.text.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,17 +20,16 @@ public class TaskActivity extends AppCompatActivity {
         Task task = (Task)getIntent().getSerializableExtra(EXTRA);
 
         EditText taskNameInput = (EditText)findViewById(R.id.task_name);
-        Button dateButton = (Button) findViewById(R.id.task_date);
-        CheckBox doneBox = (CheckBox) findViewById(R.id.task_done);
-
-        Button saveButton = (Button) findViewById(R.id.save_button);
+        Button dateButton = (Button)findViewById(R.id.task_date);
+        CheckBox doneBox = (CheckBox)findViewById(R.id.task_done);
+        Button saveButton = (Button)findViewById(R.id.save_button);
 
         taskNameInput.setText(task.getName());
-        if(task.getDueDate()==null) {
+        if (task.getDueDate() == null){
             dateButton.setText(getResources().getString(R.string.no_date));
-        }
-        else {
-            dateButton.setText(task.getDueDate().toString());
+        }else{
+            DateFormat df = DateFormat.getDateInstance();
+            dateButton.setText(df.format(task.getDueDate()));
         }
         doneBox.setChecked(task.isDone());
 

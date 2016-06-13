@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class TaskListActivity extends AppCompatActivity {
 
     @Override
@@ -21,18 +23,19 @@ public class TaskListActivity extends AppCompatActivity {
         Task[] items = new Task[3];
         items[0] = new Task();
         items[0].setName("Task 1");
+        items[0].setDueDate(new Date());
         items[1] = new Task();
         items[1].setName("Task 2");
         items[1].setDone(true);
         items[2] = new Task();
         items[2].setName("Task 3");
 
-        ListView list = (ListView)findViewById(R.id.task_list);
-        list.setAdapter(new TaskAdapter(items));
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView listView = (ListView)findViewById(R.id.task_list);
+        listView.setAdapter(new TaskAdapter(items));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(TaskListActivity.this, TaskListActivity.class);
+                Intent i = new Intent(TaskListActivity.this, TaskActivity.class);
                 Task task = (Task)parent.getAdapter().getItem(position);
                 i.putExtra(TaskActivity.EXTRA, task);
                 startActivity(i);
@@ -49,12 +52,11 @@ public class TaskListActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = super.getView(position, convertView, parent);
             Task task = getItem(position);
-
             TextView taskName = (TextView)convertView.findViewById(R.id.task_item_name);
             taskName.setText(task.getName());
 
-            CheckBox done = (CheckBox)convertView.findViewById(R.id.task_item_done);
-            done.setChecked(task.isDone());
+            CheckBox doneBox = (CheckBox)convertView.findViewById(R.id.task_item_done);
+            doneBox.setChecked(task.isDone());
 
             return convertView;
         }
