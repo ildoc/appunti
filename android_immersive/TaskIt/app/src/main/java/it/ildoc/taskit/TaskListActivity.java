@@ -1,12 +1,16 @@
 package it.ildoc.taskit;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -16,7 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TaskListActivity extends AppCompatActivity {
+public class TaskListActivity extends ActionBarActivity {
 
     private static final int EDIT_TASK_REQUEST = 10;
     private static final int CREATE_TASK_REQUEST = 20;
@@ -24,6 +28,7 @@ public class TaskListActivity extends AppCompatActivity {
     private ArrayList<Task> tasks;
     private int lastPositionClicked;
     private TaskAdapter taskAdapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,7 @@ public class TaskListActivity extends AppCompatActivity {
         tasks.add(new Task());
         tasks.get(2).setName("Task 3");
 
-        ListView listView = (ListView) findViewById(R.id.task_list);
+        listView = (ListView) findViewById(R.id.task_list);
         taskAdapter = new TaskAdapter(tasks);
         listView.setAdapter(taskAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,6 +58,48 @@ public class TaskListActivity extends AppCompatActivity {
                 startActivityForResult(i, EDIT_TASK_REQUEST);
             }
         });
+
+        listView.getSelectedItemPosition();
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                getMenuInflater().inflate(R.menu.menu_task_list_context, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                int id = item.getItemId();
+                SparseBooleanArray positions = listView.getCheckedItemPositions();
+                if (id == R.id.delete_task) {
+                    for (int i = positions.size() - 1; i >= 0; i--) {
+                        if (positions.valueAt(i))
+                            tasks.remove(positions.keyAt(i));
+                    }
+                    mode.finish();
+                    taskAdapter.notifyDataSetChanged();
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+            }
+        });
+
     }
 
     @Override
@@ -100,6 +147,26 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        getMenuInflater().inflate(R.menu.menu_task_list_context, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.delete_task) {
+            AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            tasks.remove(menuInfo.position);
+            taskAdapter.notifyDataSetChanged();
+            return true;
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     private class TaskAdapter extends ArrayAdapter<Task> {
