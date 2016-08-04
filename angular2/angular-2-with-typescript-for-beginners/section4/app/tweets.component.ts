@@ -7,12 +7,7 @@ import {TweetService} from './tweet.service';
     template: `
     <div *ngFor="#tweet of tweets">
         <tweet
-            [author]="tweet.author"
-            [nickname]="tweet.nickname"
-            [pictureUrl]="tweet.pictureUrl"
-            [text]="tweet.text"
-            [liked]="tweet.liked"
-            [likes]="tweet.likes">
+            [tweet]="tweet">
         </tweet>
     </div>
     `,

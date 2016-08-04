@@ -1,4 +1,5 @@
 import {Component, Input} from 'angular2/core';
+import {Tweet} from './tweet';
 import {HeartComponent} from './heart.component';
 
 @Component({
@@ -8,10 +9,5 @@ import {HeartComponent} from './heart.component';
 })
 
 export class TweetComponent{
-    @Input() author = '';
-    @Input() nickname = '';
-    @Input() pictureUrl = '';
-    @Input() text = '';
-    @Input() liked = false;
-    @Input() likes = 0;
+    @Input() tweet: Tweet;
 }
