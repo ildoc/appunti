@@ -1,0 +1,11 @@
+<div style="width:20px">
+<i class="glyphicon glyphicon-menu-up voteSelector"
+    [class.selectedVote]="userVote==1"
+    (click)="onClick(1)">
+</i>
+<span>{{ totalVotes }}</span>
+<i class="glyphicon glyphicon-menu-down voteSelector"
+    [class.selectedVote]="userVote==-1"
+    (click)="onClick(-1)">
+</i>
+</div>
