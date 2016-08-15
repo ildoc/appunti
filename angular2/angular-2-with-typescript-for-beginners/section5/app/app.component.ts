@@ -1,16 +1,15 @@
 import {Component} from 'angular2/core';
+import {ZippyComponent} from './zippy.component';
 
 @Component({
     selector: 'my-app',
     template: `
-        <div [hidden]="courses.length == 0">
-            List of courses
-        </div>
-        <div [hidden]="courses.length > 0">
-            You don't have any courses yet.
-        </div>
-    `
+        <zippy title="lallallero">
+            contenuto
+        </zippy>
+    `,
+    directives: [ZippyComponent]
 })
 export class AppComponent {
-    courses = [];
+
 }
