@@ -1,0 +1,66 @@
+<form [ngFormModel]="form" (ngSubmit)="signup()" #f="ngForm">
+    <div class="form-group">
+        <label for="currentPw">Current Password</label>
+        <input
+            id="currentPw"
+            ngControl="currentPw"
+            #currentPw="ngForm"
+            type="password"
+            class="form-control">
+        <div *ngIf="currentPw.touched && currentPw.errors">
+            <div
+                *ngIf="currentPw.errors.required"
+                class="alert alert-danger">
+                Current password is required
+            </div>
+            <div
+                *ngIf="currentPw.errors.incorrectPw"
+                class="alert alert-danger">
+                Current password incorrect
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="newPw">New Password</label>
+        <input
+            id="newPw"
+            ngControl="newPw"
+            #newPw="ngForm"
+            type="password"
+            class="form-control">
+        <div *ngIf="newPw.touched && newPw.errors">
+            <div
+                *ngIf="newPw.errors.required"
+                class="alert alert-danger">
+                New Password is required
+            </div>
+            <div
+                *ngIf="newPw.errors.tooShort"
+                class="alert alert-danger">
+                New Password should be 5 charachters minumum
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="confirmPw">Confirm Password</label>
+        <input
+            id="confirmPw"
+            ngControl="confirmPw"
+            #confirmPw="ngForm"
+            type="password"
+            class="form-control">
+        <div *ngIf="confirmPw.touched && confirmPw.errors">
+            <div
+                *ngIf="confirmPw.errors.required"
+                class="alert alert-danger">
+                Confirm password
+            </div>
+            <div
+                *ngIf="confirmPw.errors.dontMatch"
+                class="alert alert-danger">
+                Password doesn't match
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Sign Up</button>
+</form>
