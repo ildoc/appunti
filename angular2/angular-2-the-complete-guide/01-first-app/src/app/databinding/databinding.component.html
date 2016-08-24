@@ -1,0 +1,13 @@
+<p>
+  {{stringInterpolation}} | {{numberInterpolation}}
+</p>
+<hr>
+<input type="text" [value]="stringInterpolation">
+<p [ngClass]="{redBorder: true}">is this styled?</p>
+<p [ngStyle]="{color: 'blue'}">is this styled?</p>
+<hr>
+<app-property-binding [result]="3"></app-property-binding>
+<hr>
+<app-event-binding (clickable)="onClick($event)"></app-event-binding>
+<hr>
+<app-two-way-binding></app-two-way-binding>
