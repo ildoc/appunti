@@ -7,12 +7,20 @@ import { ShoppingListService } from './shopping-list.service';
   templateUrl: 'shopping-list.component.html'
 })
 export class ShoppingListComponent implements OnInit {
-    items: Ingredient[] = [];
+  items: Ingredient[] = [];
+  selectedItem: Ingredient = null;
 
   constructor(private sls: ShoppingListService) { }
 
   ngOnInit() {
-      this.items = this.sls.getItems();
+    this.items = this.sls.getItems();
   }
 
+  onSelectItem(item: Ingredient) {
+    this.selectedItem = item;
+  }
+
+  onCleared() {
+    this.selectedItem = null;
+  }
 }
