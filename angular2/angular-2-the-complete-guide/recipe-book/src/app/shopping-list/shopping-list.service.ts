@@ -1,4 +1,4 @@
-import { Ingredient } from '../shared'
+import { Ingredient } from '../shared';
 
 export class ShoppingListService {
     private items: Ingredient[] = []
