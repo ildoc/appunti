@@ -1,0 +1,20 @@
+docker network ls
+lista tutti i network presenti
+
+docker network inspect <network>
+ispeziona il network
+
+docker network create [--driver <driver di base>]
+crea un nuovo network, di default usa bridge come network di base
+
+docker network connect <id network> <container>
+connette un container a un network
+
+docker network connect <id network> <container>
+disconnette un container a un network
+
+** docker usa il nome del container come nome "macchina" per il dns interno **
+meglio usare i nomi dei container perchè gli ip vengono assegnati dinamicamente a seconda dell'ordine di start
+quando si crea una nuova app è consigliato creare una nuova rete
+
+con --net-alias <nome> si aggiunge un alias dns al container, per fare in modo che più container rispondano allo stesso dns (dns round robin https://en.wikipedia.org/wiki/Round-robin_DNS)

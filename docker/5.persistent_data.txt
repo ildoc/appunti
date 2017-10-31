@@ -1,0 +1,5 @@
+data volumes
+è uno spazio al di fuori del container
+
+bind mounts
+path linkati tra host e container

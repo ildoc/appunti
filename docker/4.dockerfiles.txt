@@ -1,0 +1,3 @@
+docker imabe build -t <nome immagine> -f <dockerfile>
+esegue il dockerfile buildando l'immagine e taggandola con il nome immagine. visto che è in locale non è necessario metterci il nome utente dell'hub davanti
+ogni riga del dockerfile quando viene eseguita viene cachata, così che nel caso non venga modificata non verrà più lanciata

@@ -1,0 +1,31 @@
+docker container run --publish 8080:80 --detach --name webhost nginx
+crea un container nginx con nume "webhost", mappa la sua porta 80 sulla 8080 locale, pubblica e starta il container e si detacha
+
+docker container ls
+mostra i container attivi
+
+docker container ls -a
+mostra lo storico dei container + quelli attivi
+
+docker container stop <id>
+stoppa il container
+
+docker container rm <id> <id> ... [-f per forzare]
+rimuove i container specificati
+
+docker container top <id>
+top dei processi
+
+docker container logs <id>
+ultimi x messaggi id log
+
+docker image -ls
+lista delle immagini cashate
+
+docker container start -ai <nome>
+restarta un container e ci attacha una shell
+
+docker container exec -it <nome> <programma>
+starta una shell attachata a un container runnante
+
+con il flag --rm il container viene eliminato alla sua chiusura

@@ -1,0 +1,11 @@
+docker image ls
+per vedere la lista delle immagini scaricate. quelle con image-id uguale sono effettivamente la stessa immagine, scaricata una volta sola
+
+docker pull <nome immagine>
+scarica l'immagine da docker hub
+
+docker image tag <nome immagine> <nomeutente/nome immagine>[:<tag name>]
+assegna un nuovo nome all'immagine
+
+docker image push <nome immagine>
+pusha i cambiamenti fatti al layer sul registry (di default docker hub) - serve docker login
