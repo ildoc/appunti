@@ -1,8 +1,13 @@
 import React from 'react';
+import { View } from 'react-native';
 import Header from './components/header';
+import AlbumList from './components/AlbumList';
 
 const App = () => (
-  <Header headerText={'Albums'} />
+  <View>
+    <Header headerText={'Albums'} />
+    <AlbumList />
+  </View>
 );
 
 export default App;
