@@ -1,8 +1,9 @@
 import React from 'react';
 import { TextInput, View, Text } from 'react-native';
 
-export const Input = ({ label, value, onChangeText }) => {
-    const styles = { inputStyle, labelStyle, containerStyle, placeholder, secureTextEntry };
+const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
+    const { inputStyle, labelStyle, containerStyle } = styles;
+
     return (
         <View style={containerStyle}>
             <Text style={labelStyle}>{label}</Text>
@@ -39,3 +40,5 @@ const styles = {
         alignItems: 'center'
     }
 };
+
+export { Input };
