@@ -1,6 +1,5 @@
 {
     "files.associations": {
         "*.js": "javascriptreact"
-    },
-    "python.promptToInstallJupyter": false
+    }
 }
