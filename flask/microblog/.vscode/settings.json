@@ -1,3 +1,13 @@
 {
-    "python.pythonPath": "${workspaceRoot}\\venv\\Scripts\\python.exe"
+    "python.pythonPath": "${workspaceFolder}\\venv\\Scripts\\python.exe",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "**/*.spec.ts": true,
+        "**/__pycache__": true,
+        "venv": true
+    },
 }
