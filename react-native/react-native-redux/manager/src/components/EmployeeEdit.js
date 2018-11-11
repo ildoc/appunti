@@ -20,6 +20,7 @@ class EmployeeEdit extends Component {
     render() {
         return (
             <Card>
+                <EmployeeForm />
                 <CardSection>
                     <Button onPress={this.onButtonPress.bind(this)}>
                         Save Changes
