@@ -1,4 +1,4 @@
-import 'package:EasyList/pages/home.dart';
+import 'package:EasyList/pages/auth.dart';
 import 'package:flutter/material.dart';
 
 main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         accentColor: Colors.deepPurple,
       ),
-      home: HomePage(),
+      home: AuthPage(),
     );
   }
 }
