@@ -3,8 +3,12 @@ import 'package:EasyList/pages/product.dart';
 import 'package:EasyList/pages/products.dart';
 import 'package:EasyList/pages/products_admin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 main() {
+  // debugPaintSizeEnabled = true;
+  // debugPaintBaselinesEnabled = true;
+  // debugPaintPointersEnabled = true;
   runApp(MyApp());
 }
 
