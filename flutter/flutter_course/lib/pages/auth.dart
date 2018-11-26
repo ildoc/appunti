@@ -21,7 +21,7 @@ class _AuthPageState extends State<AuthPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('asset/background.jpg'),
+            image: AssetImage('assets/background.jpg'),
             colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.5), BlendMode.dstATop),
             fit: BoxFit.cover,
