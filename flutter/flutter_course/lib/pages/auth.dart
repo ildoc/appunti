@@ -59,7 +59,9 @@ class _AuthPageState extends State<AuthPage> {
     return SwitchListTile(
       value: _formData['acceptTerms'],
       onChanged: (bool value) {
-        _formData['acceptTerms'], = value;
+        setState(() {
+          _formData['acceptTerms'] = value;
+        });
       },
       title: Text('Accept Terms'),
     );
