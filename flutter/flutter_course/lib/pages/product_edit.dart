@@ -1,6 +1,6 @@
 import 'package:EasyList/helpers/ensure-visible.dart';
 import 'package:EasyList/models/product.dart';
-import 'package:EasyList/scoped_models/products.dart';
+import 'package:EasyList/scoped_models/main.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -88,7 +88,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
 
   Widget _buildSubmitButton() {
     return ScopedModelDescendant(
-        builder: (BuildContext context, Widget child, ProductsModel model) {
+        builder: (BuildContext context, Widget child, MainModel model) {
       return RaisedButton(
         child: Text('Save'),
         textColor: Colors.white,
@@ -142,17 +142,19 @@ class _ProductEditPageState extends State<ProductEditPage> {
     }
     _formKey.currentState.save();
     if (selectedProductIndex == null) {
-      addProduct(Product(
-          title: _formData['title'],
-          description: _formData['description'],
-          price: _formData['price'],
-          image: _formData['image']));
+      addProduct(
+        _formData['title'],
+        _formData['description'],
+        _formData['price'],
+        _formData['image'],
+      );
     } else {
-      updateProduct(Product(
-          title: _formData['title'],
-          description: _formData['description'],
-          price: _formData['price'],
-          image: _formData['image']));
+      updateProduct(
+        _formData['title'],
+        _formData['description'],
+        _formData['price'],
+        _formData['image'],
+      );
     }
 
     Navigator.pushReplacementNamed(context, '/products');
@@ -161,7 +163,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
-        builder: (BuildContext context, Widget child, ProductsModel model) {
+        builder: (BuildContext context, Widget child, MainModel model) {
       final Widget pageContent =
           _buildPageContent(context, model.selectedProduct);
       return model.selectedProductIndex == null
