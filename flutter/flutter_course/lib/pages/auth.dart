@@ -10,12 +10,12 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Map<String, dynamic> _formData = {
+  final Map<String, dynamic> _formData = {
     'email': null,
     'password': null,
     'acceptTerms': false
   };
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DecorationImage _buildBackgroundImage() {
     return DecorationImage(
@@ -31,13 +31,15 @@ class _AuthPageState extends State<AuthPage> {
       decoration: InputDecoration(
           labelText: 'E-Mail', filled: true, fillColor: Colors.white),
       keyboardType: TextInputType.emailAddress,
-      onSaved: (String value) {
-        _formData['email'] = value;
-      },
       validator: (String value) {
         if (value.isEmpty ||
             !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                .hasMatch(value)) return 'Email is required';
+                .hasMatch(value)) {
+          return 'Please enter a valid email';
+        }
+      },
+      onSaved: (String value) {
+        _formData['email'] = value;
       },
     );
   }
@@ -47,12 +49,13 @@ class _AuthPageState extends State<AuthPage> {
       decoration: InputDecoration(
           labelText: 'Password', filled: true, fillColor: Colors.white),
       obscureText: true,
+      validator: (String value) {
+        if (value.isEmpty || value.length < 6) {
+          return 'Password invalid';
+        }
+      },
       onSaved: (String value) {
         _formData['password'] = value;
-      },
-      validator: (String value) {
-        if (value.isEmpty || value.length < 5)
-          return 'Password should be >5 chars';
       },
     );
   }
@@ -70,7 +73,9 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void _submitForm(Function login) {
-    if (!_formKey.currentState.validate() || !_formData['acceptTerms']) return;
+    if (!_formKey.currentState.validate() || !_formData['acceptTerms']) {
+      return;
+    }
     _formKey.currentState.save();
     login(_formData['email'], _formData['password']);
     Navigator.pushReplacementNamed(context, '/products');
@@ -78,8 +83,8 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    final double deviceWidht = MediaQuery.of(context).size.width;
-    final double targetWidth = deviceWidht > 768.0 ? 500.0 : deviceWidht * 0.95;
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
@@ -99,14 +104,14 @@ class _AuthPageState extends State<AuthPage> {
                   children: <Widget>[
                     _buildEmailTextField(),
                     SizedBox(
-                      height: 10.9,
+                      height: 10.0,
                     ),
                     _buildPasswordTextField(),
                     _buildAcceptSwitch(),
                     SizedBox(
                       height: 10.0,
                     ),
-                    ScopedModelDescendant(
+                    ScopedModelDescendant<MainModel>(
                       builder: (BuildContext context, Widget child,
                           MainModel model) {
                         return RaisedButton(
@@ -115,7 +120,7 @@ class _AuthPageState extends State<AuthPage> {
                           onPressed: () => _submitForm(model.login),
                         );
                       },
-                    )
+                    ),
                   ],
                 ),
               ),

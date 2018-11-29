@@ -16,7 +16,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
     'title': null,
     'description': null,
     'price': null,
-    'image': 'assets/food.jpg'
+    'image': null
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _titleFocusNode = FocusNode();
@@ -89,12 +89,17 @@ class _ProductEditPageState extends State<ProductEditPage> {
   Widget _buildSubmitButton() {
     return ScopedModelDescendant(
         builder: (BuildContext context, Widget child, MainModel model) {
-      return RaisedButton(
-        child: Text('Save'),
-        textColor: Colors.white,
-        onPressed: () => _submitForm(model.addProduct, model.updateProduct,
-            model.selectProduct, model.selectedProductIndex),
-      );
+      return model.isLoading
+          ? Center(child: CircularProgressIndicator())
+          : RaisedButton(
+              child: Text('Save'),
+              textColor: Colors.white,
+              onPressed: () => _submitForm(
+                  model.addProduct,
+                  model.updateProduct,
+                  model.selectProduct,
+                  model.selectedProductIndex),
+            );
     });
   }
 
@@ -146,20 +151,19 @@ class _ProductEditPageState extends State<ProductEditPage> {
       addProduct(
         _formData['title'],
         _formData['description'],
-        _formData['price'],
         _formData['image'],
-      );
+        _formData['price'],
+      ).then((_) => Navigator.pushReplacementNamed(context, '/products')
+          .then((_) => setSelectedProduct(null)));
     } else {
       updateProduct(
         _formData['title'],
         _formData['description'],
-        _formData['price'],
         _formData['image'],
-      );
+        _formData['price'],
+      ).then((_) => Navigator.pushReplacementNamed(context, '/products')
+          .then((_) => setSelectedProduct(null)));
     }
-
-    Navigator.pushReplacementNamed(context, '/products')
-        .then((_) => setSelectedProduct(null));
   }
 
   @override
