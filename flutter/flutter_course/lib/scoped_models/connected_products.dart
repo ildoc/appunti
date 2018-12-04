@@ -10,48 +10,6 @@ mixin ConnectedProductsModel on Model {
   String _selProductId;
   User _authenticatedUser;
   bool _isLoading = false;
-
-  Future<bool> addProduct(
-      String title, String description, String image, double price) {
-    _isLoading = true;
-    notifyListeners();
-    final Map<String, dynamic> productData = {
-      'title': title,
-      'description': description,
-      'image':
-          'https://cdn.pixabay.com/photo/2015/10/02/12/00/chocolate-968457_960_720.jpg',
-      'price': price,
-      'userEmail': _authenticatedUser.email,
-      'userId': _authenticatedUser.id
-    };
-    return http
-        .post('https://flutter-course-13d4d.firebaseio.com/products.json',
-            body: json.encode(productData))
-        .then((http.Response response) {
-      if (response.statusCode != 200 && response.statusCode != 201) {
-        _isLoading = false;
-        notifyListeners();
-        return false;
-      }
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      final Product newProduct = Product(
-          id: responseData['name'],
-          title: title,
-          description: description,
-          image: image,
-          price: price,
-          userEmail: _authenticatedUser.email,
-          userId: _authenticatedUser.id);
-      _products.add(newProduct);
-      _isLoading = false;
-      notifyListeners();
-      return true;
-    }).catchError((Error error) {
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    });
-  }
 }
 
 mixin ProductsModel on ConnectedProductsModel {
@@ -85,6 +43,56 @@ mixin ProductsModel on ConnectedProductsModel {
 
   int get selectedProductIndex =>
       _products.indexWhere((p) => p.id == _selProductId);
+
+  Future<bool> addProduct(
+      String title, String description, String image, double price) async {
+    _isLoading = true;
+    notifyListeners();
+    final Map<String, dynamic> productData = {
+      'title': title,
+      'description': description,
+      'image':
+          'https://cdn.pixabay.com/photo/2015/10/02/12/00/chocolate-968457_960_720.jpg',
+      'price': price,
+      'userEmail': _authenticatedUser.email,
+      'userId': _authenticatedUser.id
+    };
+
+    try {
+      final http.Response response = await http.post(
+          'https://flutter-course-13d4d.firebaseio.com/products.json',
+          body: json.encode(productData));
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      }
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      final Product newProduct = Product(
+          id: responseData['name'],
+          title: title,
+          description: description,
+          image: image,
+          price: price,
+          userEmail: _authenticatedUser.email,
+          userId: _authenticatedUser.id);
+      _products.add(newProduct);
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (error) {
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+    //   }).catchError((Error error) {
+    //     _isLoading = false;
+    //     notifyListeners();
+    //     return false;
+    //   });
+    // }
+  }
 
   Future<bool> updateProduct(
       String title, String description, String image, double price) {
@@ -208,6 +216,29 @@ mixin UserModel on ConnectedProductsModel {
   void login(String email, String password) {
     _authenticatedUser =
         User(id: 'fdalsdfasf', email: email, password: password);
+  }
+
+  Future<Map<String, dynamic>> signUp(String email, String password) async {
+    final Map<String, dynamic> authData = {
+      'email': email,
+      'password': password,
+      'returnSecuretorken': true
+    };
+    final http.Response response = await http.post(
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyCustomToken?key=AIzaSyAGz8bX6PX7C3Y0-yNIMP8TMfVryR_qfo4',
+        body: jsonEncode(authData),
+        headers: {'Content-Type': 'application/json'});
+
+    final Map<String, dynamic> responseData = jsonDecode(response.body);
+    bool hasError = true;
+    var message = 'something went wrong';
+    if (responseData.containsKey('idToken')) {
+      hasError = false;
+      message = 'Auth succeded';
+    } else if (responseData['error']['message'] == 'EMAIL_EXISTS') {
+      message = 'email exists';
+    }
+    return {'success': !hasError, 'message': message};
   }
 }
 
