@@ -17,7 +17,7 @@ class _AuthPageState extends State<AuthPage> {
     'acceptTerms': false
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _passwordTextcontroller = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
   AuthMode _authMode = AuthMode.Login;
 
   DecorationImage _buildBackgroundImage() {
@@ -52,7 +52,7 @@ class _AuthPageState extends State<AuthPage> {
       decoration: InputDecoration(
           labelText: 'Password', filled: true, fillColor: Colors.white),
       obscureText: true,
-      controller: _passwordTextcontroller,
+      controller: _passwordTextController,
       validator: (String value) {
         if (value.isEmpty || value.length < 6) {
           return 'Password invalid';
@@ -66,16 +66,15 @@ class _AuthPageState extends State<AuthPage> {
 
   Widget _buildPasswordConfirmTextField() {
     return TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Confirm Password',
-            filled: true,
-            fillColor: Colors.white),
-        obscureText: true,
-        validator: (String value) {
-          if (_passwordTextcontroller.text != value) {
-            return 'Passwords do not match';
-          }
-        });
+      decoration: InputDecoration(
+          labelText: 'Confirm Password', filled: true, fillColor: Colors.white),
+      obscureText: true,
+      validator: (String value) {
+        if (_passwordTextController.text != value) {
+          return 'Passwords do not match.';
+        }
+      },
+    );
   }
 
   Widget _buildAcceptSwitch() {
@@ -95,27 +94,30 @@ class _AuthPageState extends State<AuthPage> {
       return;
     }
     _formKey.currentState.save();
-
-    final Map<String, dynamic> successInformation = await authenticate(
+    Map<String, dynamic> successInformation;
+    successInformation = await authenticate(
         _formData['email'], _formData['password'], _authMode);
-
     if (successInformation['success']) {
       // Navigator.pushReplacementNamed(context, '/');
-    } else
+    } else {
       showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Error occurred'),
-              content: Text(successInformation['message']),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Ok'),
-                  onPressed: () => Navigator.of(context).pop(),
-                )
-              ],
-            );
-          });
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('An Error Occurred!'),
+            content: Text(successInformation['message']),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Okay'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
